@@ -11,13 +11,19 @@ public class Evento {
 
     // COSTRUTTORI
 
-    public Evento(String titolo, LocalDate data, int postiTotali){
+    public Evento(String titolo, LocalDate data, int postiTotali) throws RuntimeException{
         this.titolo= titolo;
         this.data = data;
         this.postiTotali = postiTotali;
         postiPrenotati = 0;
+        isValidPostiTotali(postiTotali);
+        isValidData(data);
     }
 
+    public Evento(int postiTotali){
+        postiTotali=this.postiTotali;
+        postiPrenotati=0;
+    }
 
     // GETTER E SETTER
 
@@ -47,20 +53,55 @@ public class Evento {
 
 
     // METODI
-    /*
-    Inserire il controllo che la data non sia già passata e che il numero di posti totali sia positivo.
-    In caso contrario sollevare opportune eccezioni.
-     */
 
-    // PRENOTA: aggiunge un certo numero di posti prenotati.
-    // Se l’evento è già passato o non ha posti disponibili deve sollevare un’eccezione.
+    private boolean isValidData(LocalDate data){
+        if (data.isBefore(LocalDate.now())){
+            throw new RuntimeException();
+        }
+        return true;
+    }
 
+    private boolean isValidPostiTotali(int postiTotali){
+        if(postiTotali<=0){
+            throw new RuntimeException();
+        }
+        return true;
+    }
+    private boolean isValidPostiPrenotati(int postiPrenotati){
+            if(postiPrenotati<=0){
+                throw new RuntimeException();
+            }
+            return true;
+    }
+    public int postiDisponibili(int postiTotali, int postiPrenotati){
+        int postiDisponibili = postiTotali - postiPrenotati;
+        return postiDisponibili;
+    }
 
-    //DISDICI: riduce di un certo numero i posti prenotati.
-    // Se l’evento è già passato o non ci sono prenotazioni deve sollevare un’eccezione.
+    private boolean isValidPostiDisponibili(int postiTotali, int postiPrenotati){
+        if (postiDisponibili(postiTotali,postiPrenotati)<=0){
+            throw new RuntimeException();
+        }
+        return true;
+    }
 
+    public void prenota() throws RuntimeException{
+        isValidPostiDisponibili(postiTotali, postiPrenotati);
+        isValidData(data);
+           postiPrenotati++;
+    }
 
-    // OVERRIDE DI toString(): stringa contenente: data formattata - titolo
+    public void disdici() {
+            isValidPostiPrenotati(postiPrenotati);
+            postiPrenotati--;
+    }
+
+    @Override
+    public String toString() {
+        return "Evento: " +
+                "data: " + data.getDayOfMonth() + "-" + data.getMonth() + "-" + data.getYear() + '\'' +
+                ", titolo: " + titolo + ".";
+    }
 }
 
 
