@@ -20,10 +20,6 @@ public class Evento {
         isValidData(data);
     }
 
-    public Evento(int postiTotali){
-        postiTotali=this.postiTotali;
-        postiPrenotati=0;
-    }
 
     // GETTER E SETTER
 
@@ -85,15 +81,21 @@ public class Evento {
         return true;
     }
 
-    public void prenota() throws RuntimeException{
-        isValidPostiDisponibili(postiTotali, postiPrenotati);
+    public void prenota(int prenotazioniRichieste) throws IllegalArgumentException{
+       // isValidPostiDisponibili(postiTotali, postiPrenotati);
         isValidData(data);
-           postiPrenotati++;
+        if (prenotazioniRichieste>postiDisponibili(postiTotali, postiPrenotati)){
+            throw new IllegalArgumentException("Posti disponibili insufficienti.");
+        }
+           postiPrenotati += prenotazioniRichieste;
     }
 
-    public void disdici() {
+    public void disdici(int disdetteRichieste) {
             isValidPostiPrenotati(postiPrenotati);
-            postiPrenotati--;
+            if(disdetteRichieste>postiPrenotati){
+                throw new IllegalArgumentException("Il numeor dei posti da disdire non può essere maggiore dei posti prenotati.");
+            }
+            postiPrenotati-=disdetteRichieste;
     }
 
     @Override
