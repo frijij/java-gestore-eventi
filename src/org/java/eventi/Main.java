@@ -26,7 +26,7 @@ public class Main {
                 boolean exit = false;
                 while (!exit) {
                     System.out.println();
-                    System.out.println("Cosa vuoi fare? (1-prenotare; 2- disdire; 3-uscire)");
+                    System.out.println("Cosa vuoi fare? (1-prenotare; 2-disdire; 3-uscire)");
                     int scelta = Integer.parseInt(scan.nextLine());
                     switch(scelta){
                         case 1:
@@ -44,30 +44,18 @@ public class Main {
                             System.out.println("Posti disponibili per questo evento: " + evento.postiDisponibili(evento.getPostiTotali(), evento.getPostiPrenotati()));
                             break;
                         case 3:
+                            exit= true;
                             System.out.println("A presto!");
                             break;
                         default:
-                            exit= true;
                             System.out.println("Scelta non valida.");
                             break;
                     }
                 }
 
-
             } catch (RuntimeException e){
                 System.out.println("Errore nella compilazione dei campi.");
             }
-            //  chiedere all’utente se e quante prenotazioni vuole fare e provare ad effettuarle
-
-            // Stampare a video il numero di posti prenotati e quelli disponibili
-
-            //Chiedere all’utente se e quanti posti vuole disdire
-
-            // Provare ad effettuare le disdette
-
-            // Stampare a video il numero di posti prenotati e quelli disponibili
         }
-
-
     }
 }
